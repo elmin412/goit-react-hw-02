@@ -6,22 +6,21 @@ import Notification from '../Notification/Notification'
 import Feedback from '../Feedback/Feedback';
 
 export default function App() {
-  const [click, setClick] = useState({
-    g: 0,
-    n: 0,
-    b: 0,
-  });
-    
-
-  useEffect(() => {
-    const storedClick = localStorage.getItem("click");
-    if (storedClick) {
-      setClick(JSON.parse(storedClick));
+  const [click, setClick] = useState(() => {
+    const savedClick = localStorage.getItem("clickCount");
+    if (savedClick !== null) {
+      return JSON.parse(savedClick);
     }
-  }, []);
+
+    return {
+      g: 0,
+      n: 0,
+      b: 0,
+    }
+  });
 
   useEffect(() => {
-    localStorage.setItem("click", JSON.stringify(click))
+    localStorage.setItem("clickCount", JSON.stringify(click))
   }, [click]);
 
 	
