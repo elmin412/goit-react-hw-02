@@ -10,9 +10,7 @@ export default function App() {
     const savedClick = localStorage.getItem("clickCount");
     if (savedClick !== null) {
       return JSON.parse(savedClick);
-    }
-
-    return {
+    } return {
       good: 0,
       neutral: 0,
       bad: 0,
@@ -24,24 +22,10 @@ export default function App() {
   }, [click]);
 
 	
-  const updateG = () => {
+ const updateFeedback = (type) => {
     setClick({
       ...click,
-      good: click.good + 1
-    });
-  }
-
-  const updateN = () => {
-    setClick({
-      ...click,
-      neutral: click.neutral + 1
-    });
-  };
-
-  const updateB = () => {
-    setClick({
-      ...click,
-      bad: click.bad + 1
+      [type]: click [type] + 1
     });
   };
     
@@ -53,17 +37,17 @@ export default function App() {
     });
   };
 
+
   const totalFeedback = (click.bad + click.neutral + click.good)
-  const positiveFeedback = Math.round((click.good / totalFeedback) * 100);
+  const positiveFeedback = totalFeedback !== 0 ? Math.round((click.good / totalFeedback) * 100) : 0;
+  
 
   return (
     <>
       <div>
         <Description />
         <Options
-          good={updateG}
-          neutral={updateN}
-          bad={updateB}
+          onButton={updateFeedback}
           reset={resetClick}
           totalFeedback={totalFeedback}
         />
@@ -71,10 +55,8 @@ export default function App() {
         {totalFeedback === 0 ? (
           <Notification />
         ) : (
-          <Feedback
-              good={click.good}
-              neutral={click.neutral}
-              bad={click.bad}
+            <Feedback
+              feedback={click}
               totalFeedback={totalFeedback}
               positive={positiveFeedback}/>
         )}
