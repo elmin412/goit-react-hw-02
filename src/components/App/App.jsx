@@ -13,9 +13,9 @@ export default function App() {
     }
 
     return {
-      g: 0,
-      n: 0,
-      b: 0,
+      good: 0,
+      neutral: 0,
+      bad: 0,
     }
   });
 
@@ -27,33 +27,34 @@ export default function App() {
   const updateG = () => {
     setClick({
       ...click,
-      g: click.g + 1
+      good: click.good + 1
     });
   }
 
   const updateN = () => {
     setClick({
       ...click,
-      n: click.n + 1
+      neutral: click.neutral + 1
     });
   };
 
   const updateB = () => {
     setClick({
       ...click,
-      b: click.b + 1
+      bad: click.bad + 1
     });
   };
     
   const resetClick = () => {
     setClick({
-      g: 0,
-      n: 0,
-      b: 0,
+      good: 0,
+      neutral: 0,
+      bad: 0,
     });
   };
 
-  const totalFeedback = (click.b + click.n + click.g)
+  const totalFeedback = (click.bad + click.neutral + click.good)
+  const positiveFeedback = Math.round((click.good / totalFeedback) * 100);
 
   return (
     <>
@@ -71,10 +72,11 @@ export default function App() {
           <Notification />
         ) : (
           <Feedback
-            good={click.g}
-            neutral={click.n}
-            bad={click.b}
-            totalFeedback={totalFeedback}/>
+              good={click.good}
+              neutral={click.neutral}
+              bad={click.bad}
+              totalFeedback={totalFeedback}
+              positive={positiveFeedback}/>
         )}
       </div>
     </>
